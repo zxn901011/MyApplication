@@ -1,0 +1,1 @@
+include ':jcvideoplayer-lib', ':vitamio', ':xutils', ':mobileplayer'
