@@ -1,14 +1,6 @@
 [
     {
-        "merged": "/Users/zhangxuening/androidProject/MyApplication/F:\\MyMobiePlayer\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-ldpi-v4\\ic_launcher.png",
-        "source": "/Users/zhangxuening/androidProject/MyApplication/F:\\MyMobiePlayer\\vitamio\\build\\intermediates\\bundles\\debug\\res\\drawable-ldpi-v4\\ic_launcher.png"
-    },
-    {
-        "merged": "/Users/zhangxuening/androidProject/MyApplication/vitamio/build/intermediates/res/merged/androidTest/debug/drawable-ldpi-v4/ic_launcher.png",
-        "source": "/Users/zhangxuening/androidProject/MyApplication/vitamio/build/intermediates/bundles/debug/res/drawable-ldpi-v4/ic_launcher.png"
-    },
-    {
-        "merged": "/Users/zhangxuening/androidProject/MyApplication/E:\\download\\MyApplication\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-ldpi-v4\\ic_launcher.png",
-        "source": "/Users/zhangxuening/androidProject/MyApplication/E:\\download\\MyApplication\\vitamio\\build\\intermediates\\bundles\\debug\\res\\drawable-ldpi-v4\\ic_launcher.png"
+        "merged": "E:\\download\\Mobileplayer\\MyApplication\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-ldpi-v4\\ic_launcher.png",
+        "source": "E:\\download\\Mobileplayer\\MyApplication\\vitamio\\build\\intermediates\\bundles\\debug\\res\\drawable-ldpi-v4\\ic_launcher.png"
     }
 ]
