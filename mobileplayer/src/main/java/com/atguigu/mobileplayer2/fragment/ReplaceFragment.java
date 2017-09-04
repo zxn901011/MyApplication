@@ -1,6 +1,7 @@
 package com.atguigu.mobileplayer2.fragment;
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ public class ReplaceFragment extends Fragment {
 
     public ReplaceFragment(){
     }
+    @SuppressLint("ValidFragment")
     private ReplaceFragment(BasePager pager) {
         this.curPager=pager;
     }

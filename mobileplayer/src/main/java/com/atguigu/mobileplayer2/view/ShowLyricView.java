@@ -25,7 +25,6 @@ public class ShowLyricView extends TextView {
     private ArrayList<Lyric> lyrics;
     private Paint paint;
     private Paint whitepaint;
-
     private int width;
     private int height;
     /**

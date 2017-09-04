@@ -48,23 +48,19 @@ public class InitActivity extends Activity {
         mPD.setMessage(InitActivity.this.getString(getResources().getIdentifier("vitamio_init_decoders", "string", getPackageName())));
         mPD.show();
       }
-
-
       @Override
       protected void onPostExecute(Boolean inited) {
         if (inited) {
           uiHandler.sendEmptyMessage(0);
         }
       }
-
-
 	@Override
 	protected Boolean doInBackground(Object... arg0) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-    }.execute();
+    }.execute();//加上运行
   }
 
   private static class UIHandler extends Handler {
