@@ -9,8 +9,6 @@ import com.atguigu.mobileplayer2.bean.SearchBean;
 import com.atguigu.mobileplayer2.view.MyWebView;
 
 import java.util.List;
-
-
 public class WebActivity extends Activity {
     private MyWebView myWebView;
     private WebView webView;
@@ -18,7 +16,6 @@ public class WebActivity extends Activity {
     private int position;
     private SearchBean.ItemData itemData;
     private String detailUrl;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +26,6 @@ public class WebActivity extends Activity {
         initData();
 
     }
-
     private void initData() {
         webView.loadUrl(detailUrl);
     }
