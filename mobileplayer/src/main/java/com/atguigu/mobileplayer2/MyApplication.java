@@ -38,14 +38,10 @@ public class MyApplication extends Application {
         //初始化科大讯飞
         // 将“12345678”替换成您申请的 APPID，申请地址： http://www.xfyun.cn
       // 请勿在“ =” 与 appid 之间添加任务空字符或者转义符
-        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=5795c210");
-
+        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=5795c210");//597ab0ec
         //初始化ImageLoader
         initUniversalImageLoader();
-
     }
-
-
     private void initUniversalImageLoader() {
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(new ColorDrawable(Color.parseColor("#f0f0f0")))

@@ -1,12 +1,13 @@
 package com.atguigu.mobileplayer2.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 作者：zxn
  * 作用：封装网页返回的json格式数据，进行json解析
  */
-public class SearchBean {
+public class SearchBean implements Serializable{
 
     private String flag;
     private String pageNo;
@@ -65,7 +66,7 @@ public class SearchBean {
         return items;
     }
 
-    public static class ItemData {
+    public static class ItemData implements Serializable{
         private String itemID;
         private String itemTitle;
         private String itemType;
@@ -202,7 +203,7 @@ public class SearchBean {
             return itemImage;
         }
 
-        public static class ItemImageEntity {
+        public static class ItemImageEntity implements Serializable{
             private String imgUrl1;
 
             public void setImgUrl1(String imgUrl1) {

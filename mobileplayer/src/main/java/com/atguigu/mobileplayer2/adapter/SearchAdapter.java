@@ -22,10 +22,10 @@ public class SearchAdapter extends BaseAdapter {
 
     private  Context context;
     private final List<SearchBean.ItemData> Items;
-
     public SearchAdapter(Context context, List<SearchBean.ItemData> mediaItems){
         this.context = context;
         this.Items = mediaItems;
+
     }
 
     @Override

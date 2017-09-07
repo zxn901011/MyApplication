@@ -55,8 +55,6 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
      * 隐藏控制面板
      */
     private static final int HIDE_MEDIACONTROLLER = 2;
-
-
     /**
      * 显示网络速度
      */
@@ -264,7 +262,7 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
                 startVitamioPlayer();
             }
         });
-        builder.setNegativeButton("取消",null);
+        builder.setNegativeButton("取消", null);
         builder.show();
     }
 
@@ -384,7 +382,7 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
     }
 
 
-    private Handler  handler = new Handler() {
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -394,8 +392,8 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
                     String netSpeed = utils.getNetSpeed(SystemVideoPlayer.this);
 
                     //显示网络速
-                    tv_laoding_netspeed.setText("玩命加载中..."+netSpeed);
-                    tv_buffer_netspeed.setText("缓存中..."+netSpeed);
+                    tv_laoding_netspeed.setText("玩命加载中..." + netSpeed);
+                    tv_buffer_netspeed.setText("缓存中..." + netSpeed);
 
                     //2.每两秒更新一次
                     handler.removeMessages(SHOW_SPEED);
@@ -432,11 +430,10 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
                         //本地视频没有缓冲效果
                         seekbarVideo.setSecondaryProgress(0);
                     }
-
                     //监听卡
                     if (!isUseSystem) {
 
-                        if(videoview.isPlaying()){
+                        if (videoview.isPlaying()) {
                             int buffer = currentPosition - precurrentPosition;
                             if (buffer < 500) {
                                 //视频卡了
@@ -445,17 +442,14 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
                                 //视频不卡了
                                 ll_buffer.setVisibility(View.GONE);
                             }
-                        }else{
+                        } else {
                             ll_buffer.setVisibility(View.GONE);
                         }
-
                     }
                     precurrentPosition = currentPosition;
-
                     //3.每秒更新一次
                     handler.removeMessages(PROGRESS);
                     handler.sendEmptyMessageDelayed(PROGRESS, 1000);
-
                     break;
             }
         }
@@ -470,8 +464,6 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
         return format.format(new Date());
     }
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);//初始化父类
@@ -484,7 +476,6 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
     }
 
     private void setData() {
-
         if (mediaItems != null && mediaItems.size() > 0) {
             MediaItem mediaItem = mediaItems.get(position);
             tvName.setText(mediaItem.getName());//设置视频的名称
@@ -539,20 +530,18 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
     }
 
 
-    class MySimpleOnGestureListener extends  GestureDetector.SimpleOnGestureListener{
+    class MySimpleOnGestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override
         public void onLongPress(MotionEvent e) {
             super.onLongPress(e);
 //                Toast.makeText(SystemVideoPlayer.this, "我被长按了", Toast.LENGTH_SHORT).show();
             startAndPause();
         }
-
         @Override
         public boolean onDoubleTap(MotionEvent e) {
 //                Toast.makeText(SystemVideoPlayer.this, "我被双击了", Toast.LENGTH_SHORT).show();
             setFullScreenAndDefault();
             return super.onDoubleTap(e);
-
         }
 
         @Override
@@ -563,14 +552,12 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
                 hideMediaController();
                 //把隐藏消息移除
                 handler.removeMessages(HIDE_MEDIACONTROLLER);
-
             } else {
                 //显示
                 showMediaController();
                 //发消息隐藏
                 handler.sendEmptyMessageDelayed(HIDE_MEDIACONTROLLER, 4000);
             }
-
             return super.onSingleTapConfirmed(e);
         }
     }
@@ -719,6 +706,7 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
             handler.sendEmptyMessageDelayed(HIDE_MEDIACONTROLLER, 4000);
         }
     }
+
     /**
      * 设置音量的大小
      *
@@ -807,7 +795,6 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
     }
 
     class MyOnErrorListener implements MediaPlayer.OnErrorListener {
-
         @Override
         public boolean onError(MediaPlayer mp, int what, int extra) {
 //            Toast.makeText(SystemVideoPlayer.this, "播放出错了哦", Toast.LENGTH_SHORT).show();
@@ -821,33 +808,26 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
 
     /**
      * a,把数据按照原样传入VtaimoVideoPlayer播放器
-       b,关闭系统播放器
+     * b,关闭系统播放器
      */
     private void startVitamioPlayer() {
 
-        if(videoview != null){
+        if (videoview != null) {
             videoview.stopPlayback();
         }
-
-
-        Intent intent = new Intent(this,VitamioVideoPlayer.class);
-        if(mediaItems != null && mediaItems.size() > 0){
-
+        Intent intent = new Intent(this, VitamioVideoPlayer.class);
+        if (mediaItems != null && mediaItems.size() > 0) {
             Bundle bundle = new Bundle();
             bundle.putSerializable("videolist", mediaItems);
             intent.putExtras(bundle);
             intent.putExtra("position", position);
-
-        }else if(uri != null){
+        } else if (uri != null) {
             intent.setData(uri);
         }
         startActivity(intent);
-
         finish();//关闭页面
     }
-
     class MyOnCompletionListener implements MediaPlayer.OnCompletionListener {
-
         @Override
         public void onCompletion(MediaPlayer mp) {
             playNextVideo();
@@ -925,7 +905,6 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
                 mVol = am.getStreamVolume(AudioManager.STREAM_MUSIC);
                 touchRang = Math.min(screenHeight, screenWidth);//screenHeight
                 handler.removeMessages(HIDE_MEDIACONTROLLER);
-
                 break;
             case MotionEvent.ACTION_MOVE://手指移动
                 //2.移动的记录相关值
@@ -933,7 +912,7 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
                 float endX = event.getX();
                 float distanceY = startY - endY;
 
-                if(endX < screenWidth/2){
+                if (endX < screenWidth / 2) {
                     //左边屏幕-调节亮度
                     final double FLING_MIN_DISTANCE = 0.5;
                     final double FLING_MIN_VELOCITY = 0.5;
@@ -947,7 +926,7 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
 //                        Log.e(TAG, "down");
                         setBrightness(-20);
                     }
-                }else{
+                } else {
                     //右边屏幕-调节声音
                     //改变声音 = （滑动屏幕的距离： 总距离）*音量最大值
                     float delta = (distanceY / touchRang) * maxVoice;
@@ -970,9 +949,9 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
         return super.onTouchEvent(event);
     }
 
-    private  Vibrator vibrator;
+    private Vibrator vibrator;
+
     /*
-     *
      * 设置屏幕亮度 lp = 0 全暗 ，lp= -1,根据系统设置， lp = 1; 最亮
      */
     public void setBrightness(float brightness) {
@@ -984,19 +963,17 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
         if (lp.screenBrightness > 1) {
             lp.screenBrightness = 1;
             vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-            long[] pattern = { 10, 200 }; // OFF/ON/OFF/ON...
+            long[] pattern = {10, 200}; // OFF/ON/OFF/ON...
             vibrator.vibrate(pattern, -1);
         } else if (lp.screenBrightness < 0.2) {
             lp.screenBrightness = (float) 0.2;
             vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-            long[] pattern = { 10, 200 }; // OFF/ON/OFF/ON...
+            long[] pattern = {10, 200}; // OFF/ON/OFF/ON...
             vibrator.vibrate(pattern, -1);
         }
 //        Log.e(TAG, "lp.screenBrightness= " + lp.screenBrightness);
         getWindow().setAttributes(lp);
     }
-
-
     /**
      * 显示控制面板
      */
@@ -1004,8 +981,6 @@ public class SystemVideoPlayer extends Activity implements View.OnClickListener 
         media_controller.setVisibility(View.VISIBLE);
         isshowMediaController = true;
     }
-
-
     /**
      * 隐藏控制面板
      */

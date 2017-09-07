@@ -1,10 +1,12 @@
 package com.atguigu.mobileplayer2.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -32,6 +34,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -99,7 +102,6 @@ public class SearchActivity extends Activity {
             if(items != null && items.size() >0){
                 items.clear();
             }
-
             try {
                 text = URLEncoder.encode(text, "UTF-8");
 
@@ -149,13 +151,22 @@ public class SearchActivity extends Activity {
             //设置适配器
             adapter = new SearchAdapter(this,items);
             listview.setAdapter(adapter);
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(SearchActivity.this,WebActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("searchList", (Serializable) items);
+                    intent.putExtras(bundle);
+                    intent.putExtra("position",position);
+                    startActivity(intent);
+                }
+            });
             tvNodata.setVisibility(View.GONE);
         }else{
             tvNodata.setVisibility(View.VISIBLE);
             adapter.notifyDataSetChanged();
         }
-
-
         progressBar.setVisibility(View.GONE);
     }
 
@@ -175,8 +186,6 @@ public class SearchActivity extends Activity {
         setContentView(R.layout.activity_search);
         findViews();
     }
-
-
     private void showDialog() {
         //1.创建RecognizerDialog对象
         RecognizerDialog mDialog = new RecognizerDialog(this, new MyInitListener());
@@ -192,12 +201,11 @@ public class SearchActivity extends Activity {
         //4.显示dialog，接收语音输入
         mDialog.show();
     }
-
     class MyRecognizerDialogListener implements RecognizerDialogListener {
 
         /**
          * @param recognizerResult
-         * @param b                是否说话结束
+         * @param b 是否说话结束
          */
         @Override
         public void onResult(RecognizerResult recognizerResult, boolean b) {
@@ -217,17 +225,13 @@ public class SearchActivity extends Activity {
             }
 
             mIatResults.put(sn, text);
-
             StringBuffer resultBuffer = new StringBuffer();//拼成一句
             for (String key : mIatResults.keySet()) {
                 resultBuffer.append(mIatResults.get(key));
             }
-
             etInput.setText(resultBuffer.toString());
             etInput.setSelection(etInput.length());
-
         }
-
         /**
          * 出错了
          *
@@ -236,13 +240,9 @@ public class SearchActivity extends Activity {
         @Override
         public void onError(SpeechError speechError) {
             Log.e("MainActivity", "onError ==" + speechError.getMessage());
-
         }
     }
-
-
     class MyInitListener implements InitListener {
-
         @Override
         public void onInit(int i) {
             if (i != ErrorCode.SUCCESS) {

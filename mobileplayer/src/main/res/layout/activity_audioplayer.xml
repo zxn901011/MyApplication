@@ -16,14 +16,11 @@
             android:layout_centerHorizontal="true"
             android:src="@drawable/now_playing_matrix_01"
             android:visibility="gone" />
-
         <com.atguigu.mobileplayer2.view.BaseVisualizerView
             android:id="@+id/baseVisualizerView"
             android:layout_width="300dp"
             android:layout_height="100dp"
             android:layout_centerHorizontal="true" />
-
-
         <TextView
             android:id="@+id/tv_artist"
             android:layout_width="wrap_content"
@@ -32,7 +29,6 @@
             android:layout_marginTop="40dp"
             android:textColor="#ffffff"
             android:textSize="14sp" />
-
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
@@ -41,11 +37,7 @@
             android:layout_marginTop="60dp"
             android:textColor="#ffffff"
             android:textSize="18sp" />
-
-
     </RelativeLayout>
-
-
     <LinearLayout
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
@@ -53,7 +45,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
         android:orientation="vertical">
-
         <TextView
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
@@ -89,15 +80,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/btn_audio_playmode_normal_selector" />
-
             <Button
                 android:id="@+id/btn_audio_pre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/btn_audio_pre_selector" />
-
-
             <Button
                 android:id="@+id/btn_audio_start_pause"
                 android:layout_width="wrap_content"
@@ -118,17 +106,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/btn_lyrc_selector" />
-
-
         </LinearLayout>
-
     </LinearLayout>
-
     <com.atguigu.mobileplayer2.view.ShowLyricView
         android:id="@+id/showLyricView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/ll_bottom"
         android:layout_below="@id/rl_top" />
-
 </RelativeLayout>

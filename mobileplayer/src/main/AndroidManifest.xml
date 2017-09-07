@@ -3,29 +3,27 @@
     package="com.atguigu.mobileplayer2">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!--连接网络权限，用于执行云端语音能力 -->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <!--获取手机录音机使用权限，听写、识别、语义理解需要用到此权限 -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <!--读取网络信息状态 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!--获取当前wifi状态 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!--允许程序改变网络连接状态 -->
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <!--读取手机信息权限 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <!--读取联系人权限，上传联系人需要用到此权限 -->
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    <!--外存储写权限， 构建语法需要用到此权限 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!--外存储读权限，构建语法需要用到此权限 -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <!--配置权限，用来记录应用配置信息 -->
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <!-- 连接网络权限，用于执行云端语音能力 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 获取手机录音机使用权限，听写、识别、语义理解需要用到此权限 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- 读取网络信息状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 获取当前wifi状态 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 允许程序改变网络连接状态 -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <!-- 读取手机信息权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 读取联系人权限，上传联系人需要用到此权限 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- 外存储写权限， 构建语法需要用到此权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 外存储读权限，构建语法需要用到此权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 配置权限，用来记录应用配置信息 -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.VIBRATE" />
-
-
 
     <application
         android:name=".MyApplication"
@@ -37,25 +35,20 @@
         <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:label="@string/app_name2"
             android:name=".activity.MainActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation">
-
-
-        </activity>
-
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:label="@string/app_name2"></activity>
         <activity
             android:name=".activity.SystemVideoPlayer"
-
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:label="@string/player_name"
             android:screenOrientation="landscape"
             android:theme="@style/noAnimation_Theme">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -66,6 +59,7 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:mimeType="video/*" />
@@ -83,7 +77,6 @@
                 <data android:mimeType="video/3gpp" />
                 <data android:mimeType="video/3gpp2" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -224,7 +217,6 @@
                 <data android:pathPattern=".*\\.m4v" />
                 <data android:pathPattern=".*\\.mp4" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -236,35 +228,42 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="rtsp" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="http" />
                 <data android:mimeType="video/*" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="video/*" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:scheme="file" />
                 <data android:mimeType="video/*" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
-
 
         <!-- Don't forgot InitActivity -->
         <activity
@@ -276,22 +275,25 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activity.VitamioVideoPlayer"
-
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="landscape"
-            android:theme="@style/noAnimation_Theme"
-            />
-
-        <activity android:name=".activity.AudioPlayerActivity" android:launchMode="singleTask"
-            android:configChanges="keyboardHidden|screenSize|orientation"/>
+            android:theme="@style/noAnimation_Theme" />
+        <activity
+            android:name=".activity.AudioPlayerActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTask" />
 
         <service android:name=".service.MusicPlayerService">
             <intent-filter>
                 <action android:name="com.atguigu.mobileplayer_OPENAUDIO" />
             </intent-filter>
         </service>
-        <activity android:name=".activity.SearchActivity" android:launchMode="singleTask"
-            android:configChanges="keyboardHidden|screenSize|orientation"/>
+
+        <activity
+            android:name=".activity.SearchActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTask" />
+        <activity android:name=".activity.WebActivity"></activity>
     </application>
 
 </manifest>

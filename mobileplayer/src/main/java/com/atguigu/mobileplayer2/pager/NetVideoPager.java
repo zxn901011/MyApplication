@@ -3,6 +3,8 @@ package com.atguigu.mobileplayer2.pager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,13 +13,14 @@ import android.widget.TextView;
 
 import com.atguigu.mobileplayer2.R;
 import com.atguigu.mobileplayer2.activity.SystemVideoPlayer;
-import com.atguigu.mobileplayer2.adapter.NetVideoPagerAdapter;
+import com.atguigu.mobileplayer2.adapter.MyRecyclerViewAdapter;
 import com.atguigu.mobileplayer2.base.BasePager;
 import com.atguigu.mobileplayer2.bean.MediaItem;
 import com.atguigu.mobileplayer2.utils.CacheUtils;
 import com.atguigu.mobileplayer2.utils.Constants;
 import com.atguigu.mobileplayer2.utils.LogUtil;
-import com.atguigu.mobileplayer2.view.XListView;
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,9 +30,7 @@ import org.xutils.http.RequestParams;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * 作者：zxn
@@ -39,7 +40,7 @@ public class NetVideoPager extends BasePager {
 
 
     @ViewInject(R.id.listview)
-    private XListView mListview;
+    private XRecyclerView mListview;
 
     @ViewInject(R.id.tv_nonet)
     private TextView mTv_nonet;
@@ -52,8 +53,8 @@ public class NetVideoPager extends BasePager {
      */
     private ArrayList<MediaItem> mediaItems;
 
-    private NetVideoPagerAdapter adapter;
-
+//    private NetVideoPagerAdapter adapter;
+    private MyRecyclerViewAdapter adapter;
     /**
      * 是否已经加载更多了
      */
@@ -73,25 +74,50 @@ public class NetVideoPager extends BasePager {
         View view = View.inflate(context, R.layout.netvideo_pager,null);
         //第一个参数是：NetVideoPager.this,第二个参数：布局
         x.view().inject(NetVideoPager.this, view);
-        mListview.setOnItemClickListener(new MyOnItemClickListener());
-        mListview.setPullLoadEnable(true);
-        mListview.setXListViewListener(new MyIXListViewListener());
+        GridLayoutManager layoutManager = new GridLayoutManager(context,3);
+//        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mListview.setLayoutManager(layoutManager);
+        mListview.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
+        mListview.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
+        mListview.setArrowImageView(R.drawable.iconfont_downgrey);
+        mListview.addItemDecoration(new DividerItemDecoration(context,DividerItemDecoration.VERTICAL));
+        mListview.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                mediaItems.clear();
+                getDataFromNet();
+                mListview.refreshComplete();
+            }
+            @Override
+            public void onLoadMore() {
+                mListview.loadMoreComplete();
+                getMoreDataFromNet();
+                mListview.loadMoreComplete();
+            }
+        });
+        String saveJson = CacheUtils.getString(context,Constants.NET_URL);
+        if(!TextUtils.isEmpty(saveJson)){
+            processData(saveJson);
+        }
+        getDataFromNet();
+
+//        mListview.setOnItemClickListener(new MyOnItemClickListener());
+//        mListview.setPullLoadEnable(true);
+//        mListview.setXListViewListener(new MyIXListViewListener());
         return view;
     }
-
-    class MyIXListViewListener implements XListView.IXListViewListener {
-        @Override
-        public void onRefresh() {
-            getDataFromNet();
-        }
-
-        @Override
-        public void onLoadMore() {
-
-            getMoreDataFromNet();
-        }
-    }
-
+//    class MyIXListViewListener implements XListView.IXListViewListener {
+//        @Override
+//        public void onRefresh() {
+//            getDataFromNet();
+//        }
+//
+//        @Override
+//        public void onLoadMore() {
+//
+//            getMoreDataFromNet();
+//        }
+//    }
     private void getMoreDataFromNet() {
         //联网
         //视频内容
@@ -124,10 +150,7 @@ public class NetVideoPager extends BasePager {
             }
         });
     }
-
-
     class MyOnItemClickListener implements AdapterView.OnItemClickListener {
-
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -141,19 +164,10 @@ public class NetVideoPager extends BasePager {
 
         }
     }
-
-
-
     @Override
     public void initData() {
         super.initData();
         LogUtil.e("网络视频的数据被初始化了。。。");
-        String saveJson = CacheUtils.getString(context,Constants.NET_URL);
-        if(!TextUtils.isEmpty(saveJson)){
-           processData(saveJson);
-        }
-        getDataFromNet();
-
     }
 
     private void getDataFromNet() {
@@ -189,12 +203,9 @@ public class NetVideoPager extends BasePager {
     }
 
     private void processData(String json) {
-
         if(!isLoadMore){
             mediaItems = parseJson(json);
             showData();
-
-
         }else{
             //加载更多
             //要把得到更多的数据，添加到原来的集合中
@@ -203,14 +214,8 @@ public class NetVideoPager extends BasePager {
             mediaItems.addAll(parseJson(json));
             //刷新适配器
             adapter.notifyDataSetChanged();
-            onLoad();
-
-
-
+//            onLoad();
         }
-
-
-
     }
 
     private void showData() {
@@ -218,9 +223,20 @@ public class NetVideoPager extends BasePager {
         if(mediaItems != null && mediaItems.size() >0){
             //有数据
             //设置适配器
-            adapter = new NetVideoPagerAdapter(context,mediaItems);
+            adapter = new MyRecyclerViewAdapter(context,mediaItems);
             mListview.setAdapter(adapter);
-            onLoad();
+            adapter.setOnItemClickListener(new MyRecyclerViewAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, ArrayList<MediaItem> mediaItems,int position) {
+                    Intent intent = new Intent(context,SystemVideoPlayer.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("videolist",mediaItems);
+                    intent.putExtras(bundle);
+                    intent.putExtra("position",position-1);
+                    context.startActivity(intent);
+                }
+            });
+//            onLoad();
             //把文本隐藏
             mTv_nonet.setVisibility(View.GONE);
         }else{
@@ -228,28 +244,25 @@ public class NetVideoPager extends BasePager {
             //文本显示
             mTv_nonet.setVisibility(View.VISIBLE);
         }
-
-
         //ProgressBar隐藏
         mProgressBar.setVisibility(View.GONE);
     }
 
 
-    private void onLoad() {
-        mListview.stopRefresh();
-        mListview.stopLoadMore();
-        mListview.setRefreshTime("更新时间:"+getSysteTime());
-    }
-
+//    private void onLoad() {
+//        mListview.stopRefresh();
+//        mListview.stopLoadMore();
+//        mListview.setRefreshTime("更新时间:"+getSysteTime());
+//    }
     /**
      * 得到系统时间
      *
      * @return
      */
-    public String getSysteTime() {
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-        return format.format(new Date());
-    }
+//    public String getSysteTime() {
+//        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+//        return format.format(new Date());
+//    }
     /**
      * 解决json数据：
      * 1.用系统接口解析json数据
@@ -263,15 +276,11 @@ public class NetVideoPager extends BasePager {
             JSONObject jsonObject = new JSONObject(json);
             JSONArray jsonArray = jsonObject.optJSONArray("trailers");
             if(jsonArray!= null && jsonArray.length() >0){
-
                 for (int i=0;i<jsonArray.length();i++){
-
                     JSONObject jsonObjectItem = (JSONObject) jsonArray.get(i);
 
                     if(jsonObjectItem != null){
-
                         MediaItem mediaItem = new MediaItem();
-
 
                         String movieName = jsonObjectItem.optString("movieName");//name
                         mediaItem.setName(movieName);
@@ -290,13 +299,9 @@ public class NetVideoPager extends BasePager {
                     }
                 }
             }
-
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         return mediaItems;
     }
 }

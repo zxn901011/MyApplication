@@ -175,24 +175,13 @@ public class VideoPager extends BasePager {
 
                         String artist = cursor.getString(4);//艺术家
                         mediaItem.setArtist(artist);
-
-
-
                     }
-
                     cursor.close();
-
-
                 }
-
-
                 //Handler发消息
                 handler.sendEmptyMessage(10);
-
-
             }
         }.start();
-
     }
 
     /**

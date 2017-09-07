@@ -11,12 +11,10 @@ import android.util.AttributeSet;
 import android.view.View;
 
 public class BaseVisualizerView extends View implements Visualizer.OnDataCaptureListener{
-
     private static final int DN_W = 480;
     private static final int DN_H = 160;
     private static final int DN_SL =14;
     private static final int DN_SW = 6;
-
     private int hgap = 0;
     private int vgap = 0;
     private int levelStep = 0;
@@ -67,12 +65,10 @@ public class BaseVisualizerView extends View implements Visualizer.OnDataCapture
         mPaint.setStrokeJoin(Join.ROUND);
         mPaint.setStrokeCap(Cap.ROUND);
     }
-
     public BaseVisualizerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
     }
-
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);

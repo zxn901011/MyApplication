@@ -8,9 +8,11 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/jcvideoplayer-lib" />
             <option value="$PROJECT_DIR$/mobileplayer" />
             <option value="$PROJECT_DIR$/vitamio" />
+            <option value="$PROJECT_DIR$/xrecyclerview" />
             <option value="$PROJECT_DIR$/xutils" />
           </set>
         </option>

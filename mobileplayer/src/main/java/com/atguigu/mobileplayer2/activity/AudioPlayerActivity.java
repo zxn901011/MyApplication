@@ -71,36 +71,37 @@ public class AudioPlayerActivity extends Activity implements View.OnClickListene
     private void findViews() {
         setContentView(R.layout.activity_audioplayer);
 
-        ivIcon = (ImageView)findViewById( R.id.iv_icon );
+        ivIcon = (ImageView) findViewById(R.id.iv_icon);
         ivIcon.setBackgroundResource(R.drawable.animation_list);
         AnimationDrawable rocketAnimation = (AnimationDrawable) ivIcon.getBackground();
         rocketAnimation.start();
-        tvArtist = (TextView)findViewById( R.id.tv_artist );
-        tvName = (TextView)findViewById( R.id.tv_name );
-        tvTime = (TextView)findViewById( R.id.tv_time );
-        seekbarAudio = (SeekBar)findViewById( R.id.seekbar_audio );
-        btnAudioPlaymode = (Button)findViewById( R.id.btn_audio_playmode );
-        btnAudioPre = (Button)findViewById( R.id.btn_audio_pre );
-        btnAudioStartPause = (Button)findViewById( R.id.btn_audio_start_pause );
-        btnAudioNext = (Button)findViewById( R.id.btn_audio_next );
-        btnLyrc = (Button)findViewById( R.id.btn_lyrc );
+        tvArtist = (TextView) findViewById(R.id.tv_artist);
+        tvName = (TextView) findViewById(R.id.tv_name);
+        tvTime = (TextView) findViewById(R.id.tv_time);
+        seekbarAudio = (SeekBar) findViewById(R.id.seekbar_audio);
+        btnAudioPlaymode = (Button) findViewById(R.id.btn_audio_playmode);
+        btnAudioPre = (Button) findViewById(R.id.btn_audio_pre);
+        btnAudioStartPause = (Button) findViewById(R.id.btn_audio_start_pause);
+        btnAudioNext = (Button) findViewById(R.id.btn_audio_next);
+        btnLyrc = (Button) findViewById(R.id.btn_lyrc);
         showLyricView = (ShowLyricView) findViewById(R.id.showLyricView);
         baseVisualizerView = (BaseVisualizerView) findViewById(R.id.baseVisualizerView);
 
-        btnAudioPlaymode.setOnClickListener( this );
-        btnAudioPre.setOnClickListener( this );
-        btnAudioStartPause.setOnClickListener( this );
-        btnAudioNext.setOnClickListener( this );
-        btnLyrc.setOnClickListener( this );
+        btnAudioPlaymode.setOnClickListener(this);
+        btnAudioPre.setOnClickListener(this);
+        btnAudioStartPause.setOnClickListener(this);
+        btnAudioNext.setOnClickListener(this);
+        btnLyrc.setOnClickListener(this);
 
         //设置视频的拖动
         seekbarAudio.setOnSeekBarChangeListener(new MyOnSeekBarChangeListener());
     }
+
     class MyOnSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            if(fromUser){
+            if (fromUser) {
                 //拖动进度
                 try {
                     service.seekTo(progress);
@@ -109,14 +110,13 @@ public class AudioPlayerActivity extends Activity implements View.OnClickListene
                 }
             }
         }
+
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
-
         }
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-
         }
     }
 
@@ -128,25 +128,25 @@ public class AudioPlayerActivity extends Activity implements View.OnClickListene
      */
     @Override
     public void onClick(View v) {
-        if ( v == btnAudioPlaymode ) {
+        if (v == btnAudioPlaymode) {
             setPlaymode();
-        } else if ( v == btnAudioPre ) {
-            if(service != null){
+        } else if (v == btnAudioPre) {
+            if (service != null) {
                 try {
                     service.pre();
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
             }
-        } else if ( v == btnAudioStartPause ) {
-            if(service != null){
+        } else if (v == btnAudioStartPause) {
+            if (service != null) {
                 try {
-                    if(service.isPlaying()){
+                    if (service.isPlaying()) {
                         //暂停
                         service.pause();
                         //按钮-播放
                         btnAudioStartPause.setBackgroundResource(R.drawable.btn_audio_start_selector);
-                    }else{
+                    } else {
                         //播放
                         service.start();
                         //按钮-暂停
@@ -156,28 +156,28 @@ public class AudioPlayerActivity extends Activity implements View.OnClickListene
                     e.printStackTrace();
                 }
             }
-        } else if ( v == btnAudioNext ) {
-            if(service != null){
+        } else if (v == btnAudioNext) {
+            if (service != null) {
                 try {
                     service.next();
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
             }
-        } else if ( v == btnLyrc ) {
+        } else if (v == btnLyrc) {
         }
     }
 
     private void setPlaymode() {
         try {
             int playmode = service.getPlayMode();
-            if(playmode==MusicPlayerService.REPEAT_NORMAL){
+            if (playmode == MusicPlayerService.REPEAT_NORMAL) {
                 playmode = MusicPlayerService.REPEAT_SINGLE;
-            }else if(playmode == MusicPlayerService.REPEAT_SINGLE){
+            } else if (playmode == MusicPlayerService.REPEAT_SINGLE) {
                 playmode = MusicPlayerService.REPEAT_ALL;
-            }else if(playmode ==MusicPlayerService.REPEAT_ALL){
+            } else if (playmode == MusicPlayerService.REPEAT_ALL) {
                 playmode = MusicPlayerService.REPEAT_NORMAL;
-            }else{
+            } else {
                 playmode = MusicPlayerService.REPEAT_NORMAL;
             }
 
@@ -192,17 +192,17 @@ public class AudioPlayerActivity extends Activity implements View.OnClickListene
 
     private void showPlaymode() {
         try {
-           int playmode = service.getPlayMode();
-            if(playmode==MusicPlayerService.REPEAT_NORMAL){
+            int playmode = service.getPlayMode();
+            if (playmode == MusicPlayerService.REPEAT_NORMAL) {
                 btnAudioPlaymode.setBackgroundResource(R.drawable.btn_audio_playmode_normal_selector);
                 Toast.makeText(AudioPlayerActivity.this, "顺序播放", Toast.LENGTH_SHORT).show();
-            }else if(playmode == MusicPlayerService.REPEAT_SINGLE){
+            } else if (playmode == MusicPlayerService.REPEAT_SINGLE) {
                 btnAudioPlaymode.setBackgroundResource(R.drawable.btn_audio_playmode_single_selector);
                 Toast.makeText(AudioPlayerActivity.this, "单曲循环", Toast.LENGTH_SHORT).show();
-            }else if(playmode ==MusicPlayerService.REPEAT_ALL){
+            } else if (playmode == MusicPlayerService.REPEAT_ALL) {
                 btnAudioPlaymode.setBackgroundResource(R.drawable.btn_audio_playmode_all_selector);
                 Toast.makeText(AudioPlayerActivity.this, "全部循环", Toast.LENGTH_SHORT).show();
-            }else{
+            } else {
                 btnAudioPlaymode.setBackgroundResource(R.drawable.btn_audio_playmode_normal_selector);
                 Toast.makeText(AudioPlayerActivity.this, "顺序播放", Toast.LENGTH_SHORT).show();
             }
@@ -218,30 +218,26 @@ public class AudioPlayerActivity extends Activity implements View.OnClickListene
     private void checkPlaymode() {
         try {
             int playmode = service.getPlayMode();
-            if(playmode==MusicPlayerService.REPEAT_NORMAL){
+            if (playmode == MusicPlayerService.REPEAT_NORMAL) {
                 btnAudioPlaymode.setBackgroundResource(R.drawable.btn_audio_playmode_normal_selector);
-            }else if(playmode == MusicPlayerService.REPEAT_SINGLE){
+            } else if (playmode == MusicPlayerService.REPEAT_SINGLE) {
                 btnAudioPlaymode.setBackgroundResource(R.drawable.btn_audio_playmode_single_selector);
-            }else if(playmode ==MusicPlayerService.REPEAT_ALL){
+            } else if (playmode == MusicPlayerService.REPEAT_ALL) {
                 btnAudioPlaymode.setBackgroundResource(R.drawable.btn_audio_playmode_all_selector);
-            }else{
+            } else {
                 btnAudioPlaymode.setBackgroundResource(R.drawable.btn_audio_playmode_normal_selector);
             }
 
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-
-
-
-
     }
 
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case SHOW_LYRIC://显示歌词
 
                     //1.得到当前的进度
@@ -263,10 +259,10 @@ public class AudioPlayerActivity extends Activity implements View.OnClickListene
                         //2.设置SeekBar.setProgress(进度)
                         seekbarAudio.setProgress(currentPosition);
                         //3.时间进度跟新
-                        tvTime.setText(utils.stringForTime(currentPosition)+"/"+utils.stringForTime(service.getDuration()));
+                        tvTime.setText(utils.stringForTime(currentPosition) + "/" + utils.stringForTime(service.getDuration()));
                         //4.每秒更新一次
                         handler.removeMessages(PROGRESS);
-                        handler.sendEmptyMessageDelayed(PROGRESS,1000);
+                        handler.sendEmptyMessageDelayed(PROGRESS, 1000);
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
@@ -274,14 +270,16 @@ public class AudioPlayerActivity extends Activity implements View.OnClickListene
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initData();
         findViews();
+        initData();
         getData();
         bindAndStartService();
     }
+
     private void initData() {
         utils = new Utils();
         //注册广播
@@ -290,8 +288,6 @@ public class AudioPlayerActivity extends Activity implements View.OnClickListene
         intentFilter.addAction(MusicPlayerService.OPENAUDIO);
         registerReceiver(receiver, intentFilter);
     }
-
-
     private ServiceConnection con = new ServiceConnection() {
 
         /**
@@ -302,12 +298,12 @@ public class AudioPlayerActivity extends Activity implements View.OnClickListene
         @Override
         public void onServiceConnected(ComponentName name, IBinder iBinder) {
             service = IMusicPlayerService.Stub.asInterface(iBinder);
-            if(service != null){
+            if (service != null) {
                 try {
-                    if(!notification){//从列表
+                    if (!notification) {//从列表
                         service.openAudio(position);
-                    }else{
-                        System.out.println("onServiceConnected==Thread-name=="+Thread.currentThread().getName());
+                    } else {
+                        System.out.println("onServiceConnected==Thread-name==" + Thread.currentThread().getName());
                         //从状态栏
                         showLyric();
                         showViewData();
@@ -325,7 +321,7 @@ public class AudioPlayerActivity extends Activity implements View.OnClickListene
         @Override
         public void onServiceDisconnected(ComponentName name) {
             try {
-                if(service != null){
+                if (service != null) {
                     service.stop();
                     service = null;
                 }
@@ -334,7 +330,8 @@ public class AudioPlayerActivity extends Activity implements View.OnClickListene
             }
         }
     };
-    class MyReceiver extends BroadcastReceiver{
+
+    class MyReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             showData();
@@ -348,16 +345,17 @@ public class AudioPlayerActivity extends Activity implements View.OnClickListene
         checkPlaymode();
         setupVisualizerFxAndUi();
     }
-    private  Visualizer mVisualizer;
+
+    private Visualizer mVisualizer;
+
     /**
      * 生成一个VisualizerView对象，使音频频谱的波段能够反映到 VisualizerView上
      */
-    private void setupVisualizerFxAndUi()
-    {
+    private void setupVisualizerFxAndUi() {
 
         try {
             int audioSessionid = service.getAudioSessionId();
-            System.out.println("audioSessionid=="+audioSessionid);
+            System.out.println("audioSessionid==" + audioSessionid);
             mVisualizer = new Visualizer(audioSessionid);
             // 参数内必须是2的位数
             mVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
@@ -378,9 +376,9 @@ public class AudioPlayerActivity extends Activity implements View.OnClickListene
             //传歌词文件
             //mnt/sdcard/audio/beijingbeijing.mp3
             //mnt/sdcard/audio/beijingbeijing.lrc
-            path = path.substring(0,path.lastIndexOf("."));
+            path = path.substring(0, path.lastIndexOf("."));
             File file = new File(path + ".lrc");
-            if(!file.exists()){
+            if (!file.exists()) {
                 file = new File(path + ".txt");
             }
             lyricUtils.readLyricFile(file);//解析歌词
@@ -388,10 +386,11 @@ public class AudioPlayerActivity extends Activity implements View.OnClickListene
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        if(lyricUtils.isExistsLyric()){
+        if (lyricUtils.isExistsLyric()) {
             handler.sendEmptyMessage(SHOW_LYRIC);
         }
     }
+
     private void showViewData() {
         try {
             tvArtist.setText(service.getArtist());
@@ -405,6 +404,7 @@ public class AudioPlayerActivity extends Activity implements View.OnClickListene
             e.printStackTrace();
         }
     }
+
     private void bindAndStartService() {
         Intent intent = new Intent(this, MusicPlayerService.class);
         intent.setAction("com.atguigu.mobileplayer_OPENAUDIO");
@@ -417,22 +417,23 @@ public class AudioPlayerActivity extends Activity implements View.OnClickListene
      */
     private void getData() {
         notification = getIntent().getBooleanExtra("notification", false);
-        if(!notification){
-            position = getIntent().getIntExtra("position",0);
+        if (!notification) {
+            position = getIntent().getIntExtra("position", 0);
         }
 
     }
+
     @Override
     protected void onDestroy() {
 
         handler.removeCallbacksAndMessages(null);
         //取消注册广播
-        if(receiver != null){
+        if (receiver != null) {
             unregisterReceiver(receiver);
             receiver = null;
         }
         //解绑服务
-        if(con != null){
+        if (con != null) {
             unbindService(con);
             con = null;
         }
@@ -442,7 +443,7 @@ public class AudioPlayerActivity extends Activity implements View.OnClickListene
     @Override
     protected void onPause() {
         super.onPause();
-        if(mVisualizer != null){
+        if (mVisualizer != null) {
             mVisualizer.release();
         }
     }
